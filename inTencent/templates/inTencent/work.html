@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block tilte %}
+    <title>工作环境 | 人在腾讯 | Tencent 腾讯招聘</title>
+{% endblock %}
+
+<body>
+{% block content %}
+    {% block page_left %}
+        <div id="workInTencent" class="maxwidth">
+        <div class="box wcont_a">
+        <div id="inQQMenu">
+            <a id="inQQMenu1" {% if request.path == '/inTencent/work/' %}class="item active" {% else %} class="item"{% endif %}
+               href="{% url 'inTencent:work' %}">
+                <div class="c">工作环境</div>
+            </a>
+            <a id="inQQMenu2" {% if request.path == '/inTencent/live/' %}class="item active" {% else %} class="item"{% endif %}
+               href="{% url 'inTencent:live' %}">
+                <div class="c">腾讯生活</div>
+            </a>
+            <a id="inQQMenu3" {% if request.path == '/inTencent/welfare/' %}class="item active" {% else %} class="item"{% endif %}
+               href="{% url 'inTencent:welfare' %}">
+                <div class="c">薪酬福利</div>
+            </a>
+            <a id="inQQMenu4" {% if request.path == '/inTencent/training/' %} class="item active nomargin" {% else %} class="item nomargin"{% endif %}
+               href="{% url 'inTencent:training' %}">
+                <div class="c">培训发展</div>
+            </a>
+            <div class="clr"></div>
+        </div>
+    {% endblock %}
+<div id="inQQCt">
+    <div id="inqqgzhj" class="margincenter"></div>
+</div>
+
+<div class="height20"></div>
+<div id="inqqgzhj2"></div>
+<div class="imgchang">
+    <div class="bigimg mt9"
+         style="background-image:url(//cdn.m.tencent.com/hr_static/img/in/gzhj0.png)"></div>
+    <div class="relative maxwidth">
+        <div class="dian2s">
+            <a class="item active" b="//cdn.m.tencent.com/hr_static/img/in/gzhj0.png"></a>
+            <a class="item" b="//cdn.m.tencent.com/hr_static/img/in/gzhj1.jpg"></a>
+            <a class="item" b="//cdn.m.tencent.com/hr_static/img/in/gzhj2.jpg"></a>
+            <a class="item" b="//cdn.m.tencent.com/hr_static/img/in/gzhj3.jpg"></a>
+            <a class="item" b="//cdn.m.tencent.com/hr_static/img/in/gzhj4.jpg"></a>
+            <div class="clr"></div>
+        </div>
+    </div>
+</div>
+<div class="split"></div>
+
+<div id="inqqbgdl"></div>
+<div class="imgchang">
+    <div class="bigimg mt9"
+         style="background-image:url(//cdn.m.tencent.com/hr_static/img/in/bgdl0.png)"></div>
+    <div class="relative maxwidth">
+        <div class="dian2s">
+            <a class="item active" b="//cdn.m.tencent.com/hr_static/img/in/bgdl0.png"></a>
+            <a class="item" b="//cdn.m.tencent.com/hr_static/img/in/bgdl1.jpg"></a>
+            <a class="item" b="//cdn.m.tencent.com/hr_static/img/in/bgdl2.jpg"></a>
+            <a class="item" b="//cdn.m.tencent.com/hr_static/img/in/bgdl3.jpg"></a>
+            <a class="item" b="//cdn.m.tencent.com/hr_static/img/in/bgdl4.jpg"></a>
+            <div class="clr"></div>
+        </div>
+    </div>
+</div>
+<div class="split"></div>
+</div>
+</div>
+{% endblock %}
+</body>

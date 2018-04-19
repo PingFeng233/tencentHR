@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block tilte %}
+    <title>职位搜索 | 社会招聘 | Tencent 腾讯招聘</title>
+{% endblock %}
+<body>
+{% block content %}
+    <div id="sociaheader">
+    </div>
+    <div id="position" class="maxwidth">
+        <a name="a" id="a"></a>
+        <div class="left wcont_b box">
+            <div class="blueline">
+                <div class="butzwss"></div>
+            </div>
+            <form id="searchform" class="buts1">
+                <div id="searchrow1">
+                    <div id="search1"><input id="search2" name="keywords" placeholder="请输入关键词" value="{{ keywords }}"
+                                             class="left"/>
+                        <input class="left" id="search3" type="submit" value=""/>
+                        <div class="clr"></div>
+                    </div>
+                    <input type="hidden" name="lid" value="{{ workLocation_id }}"/>
+                    <input type="hidden" name="tid" value="{{ category_id }}"/>
+                </div>
+                <div id="searchrow2">
+                    <div class="srow2l left"></div>
+                    <div class="left items pl9 itemnone" id="additems">
+                        <a href="?lid=0&tid={{ category_id }}&keywords={{ keywords }}"
+                           {% if workLocation_id == 0 %}class="item active" {% else %}
+                           class="item" {% endif %}><span><font>全部</font></span></a>
+                        {% for workLocation in workLocation_list1 %}
+                            {% if workLocation_id == workLocation.id %}
+                                <a class="item active"
+                                   href="?lid={{ workLocation.id }}&tid={{ category_id }}&keywords={{ keywords }}"><span><font>{{ workLocation }}</font></span></a>
+                            {% else %}
+                                <a class="item"
+                                   href="?lid={{ workLocation.id }}&tid={{ category_id }}&keywords={{ keywords }}"><span><font>{{ workLocation }}</font></span></a>
+                            {% endif %}
+                        {% endfor %}
+                        {% for workLocation in workLocation_list2 %}
+                            <a class="item itemhide"
+                               href="?lid={{ workLocation.id }}&tid={{ category_id }}&keywords={{ keywords }}"><span><font>{{ workLocation }}</font></span></a>
+                        {% endfor %}
+                    </div>
+                    <div class="left"><a href="javascript:;" class="more2">更多</a></div>
+                    <div class="clr"></div>
+                </div>
+                <div id="searchrow3">
+                    <div class="srow2l left"></div>
+                    <div class="left items pl9">
+                        <a href="?lid={{ workLocation_id }}&tid=0&keywords={{ keywords }}"
+                           {% if category_id == 0 %}class="item active" {% else %} class="item" {% endif %}><span><font>全部</font></span></a>
+                        {% for category in category_list %}
+                            <a {% if category_id == category.id %} class="item active" {% else %}
+                                                                   class="item" {% endif %}
+                                                                   href="?lid={{ workLocation_id }}&tid={{ category.id }}&keywords={{ keywords }}"><span><font>{{ category }}</font></span></a>
+                        {% endfor %}
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </form>
+            <table class="tablelist" cellpadding="0" cellspacing="0">
+                <tr class="h">
+                    <td class="l" width="374">职位名称</td>
+                    <td>职位类别</td>
+                    <td>人数</td>
+                    <td>地点</td>
+                    <td>发布时间</td>
+                </tr>
+                {% for zhaopin in zhaopin_list %}
+                    <tr class="even">
+                        <td class="l square"><a target="_blank"
+                                                href="{% url 'zhaopin:detail' zhaopin.id %}">{{ zhaopin.title }}</a>
+                        </td>
+                        <td>{{ zhaopin.category }}</td>
+                        <td>{{ zhaopin.peopleNumber }}</td>
+                        <td>{{ zhaopin.workLocation }}</td>
+                        <td>{{ zhaopin.publishTime }}</td>
+                    </tr>
+                {% endfor %}
+
+                <tr class="f">
+                    <td colspan="5">
+                        <div class="left">共<span class="lightblue total">{{ list_num }}</span>个职位</div>
+                        <div class="right">
+                            <div class="pagenav">
+                                {% if zhaopin_list.has_previous %}
+                                    <a href="?lid={{ workLocation_id }}&tid={{ category_id }}&keywords={{ keywords }}&page={{ zhaopin_list.previous_page_number }}"
+                                       id="prev">上一页</a>
+                                {% endif %}
+                                {% for page_number in page_range %}
+                                    {% if zhaopin_list.number == page_number %}
+                                        <a class="active"
+                                           href="?lid={{ workLocation_id }}&tid={{ category_id }}&keywords={{ keywords }}&page={{ page_number }}">{{ page_number }}</a>
+                                    {% else %}
+                                        <a href="?lid={{ workLocation_id }}&tid={{ category_id }}&keywords={{ keywords }}&page={{ page_number }}">{{ page_number }}</a>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if zhaopin_list.has_next %}
+                                    <a href="?lid={{ workLocation_id }}&tid={{ category_id }}&keywords={{ keywords }}&page={{ zhaopin_list.next_page_number }}"
+                                       id="next">下一页</a>
+                                {% endif %}
+
+                                <div class="clr"></div>
+                            </div>
+                        </div>
+                        <div class="clr"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="right wcont_s box">
+            <div class="blueline">
+                <div class="butcjwt"></div>
+            </div>
+            <div class="module_faqs square"><a href="faq.php?id=5" title="如何应聘腾讯公司的职位？">如何应聘腾讯公司的职位？</a><a
+                    href="faq.php?id=3" title="应届生如何应聘？">应届生如何应聘？</a><a href="faq.php?id=19"
+                                                                        title="腾讯应聘流程是什么？">腾讯应聘流程是什么？</a><a
+                    href="faq.php?id=20" title="我注册了简历，但为什么没有人联系我？">我注册了简历，但为什么没...</a><a href="faq.php?id=22"
+                                                                                          title="我忘记密码了，怎么办？">我忘记密码了，怎么办？</a><a
+                    href="faq.php?id=23" title="如何进行简历修改？">如何进行简历修改？</a></div>
+        </div>
+        <div class="clr"></div>
+    </div>
+{% endblock %}
+</body>
+</html>

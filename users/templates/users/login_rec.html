@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block tilte %}
+    <title>用户登录 | 社会招聘 | Tencent 腾讯招聘</title>
+{% endblock %}
+
+
+{% block content %}
+    <div id="login" class="maxwidth">
+        <div class="box wcont_a">
+            <div class="blueline">
+                <div class="butlogin"></div>
+            </div>
+            <div id="logindiv">
+                <form onsubmit="return checkCommonLogin();" id="frm_user_login_common" name="frm_user_login_common"
+                      method="post" action="">
+                    {% csrf_token %}
+                    <table cellpadding="0" cellspacing="0">
+                        {% if info.error %}
+                            <tr class="bottom0">
+                                <td></td>
+                                <td style="font-family: 微软雅黑"><b>{{ info.error }}</b></td>
+                                <td></td>
+                            </tr>
+                        {% endif %}
+                        <tr class="bottom0">
+                            <td align="right" width="80" class="k">用户名：</td>
+                            <td>
+                                <input class="longinput3 changeCheck" style="size:35px;width:175px" id="username_common"
+                                       name="username" type="text" value=""
+                                       onblur="return checkLoginEmailCommon()" tabindex="11"/>
+                            </td>
+                            <td>
+                                <a {% if 'can' in request.path %} href="{% url 'users:register_can' %}"
+                                {% else %} href="{% url 'users:register_rec' %}" {% endif %} >注册新用户</a>
+                            </td>
+                        </tr>
+                        <tr class="errortd">
+                            <td></td>
+                            <td>
+                                <div class="height20"><span id="msg_LoginEmail_common" class="clew"></span></div>
+                            </td>
+                        </tr>
+
+                        <tr class="bottom0">
+                            <td align="right" class="k" style="padding-top:12px;" valign="top">登录密码：</td>
+                            <td>
+                                <input class="longinput3 changeCheck" style="size:35px;width:175px"
+                                       id="password_common" name="password" type="password" value=""
+                                       onblur="return checkPasswordCommon()" tabindex="12"/>
+                            </td>
+                            <td>
+                                <a href="#">忘了密码？</a>
+                            </td>
+                        </tr>
+                        <tr class="errortd">
+                            <td></td>
+                            <td>
+                                <div class="height20"><span id="msg_LoginEmail_common" class="clew"></span></div>
+                            </td>
+                        </tr>
+
+                        <tr class="bottom0">
+                            <td align="right" class="k" style="padding-top:12px;" valign="top">部门：</td>
+                            <td>
+                                <input class="longinput3 changeCheck" style="size:35px;width:175px"
+                                       id="department_common" name="department" type="text" value=""
+                                       onblur="return checkPasswordCommon()" tabindex="12"/>
+                            </td>
+                        </tr>
+
+                        <tr class="errortd">
+                            <td></td>
+                            <td>
+                                <div class="height20"><span id="msg_Password_common" class="clew"></span></div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td style="width: 190px">
+                                <button type="submit" class="but2"
+                                        style="word-wrap:break-word;word-break:break-all;">登　录
+                                </button>
+                            </td>
+                            <td>
+                                <a href="{% url 'users:login_can' %}">个人版登录</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

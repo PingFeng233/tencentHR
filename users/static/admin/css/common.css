@@ -1,0 +1,28 @@
+.panel{
+    border-radius:0px;
+}
+
+.panel-heading{
+    border-top-left-radius:0px;
+    border-top-right-radius:0px;
+}
+.form-control{
+    border-radius:0px;
+}
+.btn{
+    border-radius:0px;
+}
+.label{
+    border-radius:0px;
+}
+.pagination>li:first-child>a, .pagination>li:first-child>span{
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.pagination>li:last-child>a, .pagination>li:last-child>span {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    text-align:center;
+}

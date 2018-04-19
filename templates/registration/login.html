@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block tilte %}
+
+    <title>用户登录 | 社会招聘 | Tencent 腾讯招聘</title>
+    <style>
+        .errorlist {
+            color: red;
+        }
+    </style>
+{% endblock %}
+<body>
+{% block content %}
+    </div>
+    <div id="reg0" class="maxwidth">
+        <div class="box wcont_a">
+            <div class="blueline">
+                <div class="butreg0"></div>
+            </div>
+
+            <div id="frm_reg1" name="frm_reg1">
+                <input id="type" type="hidden" name="type" value="0"/>
+                <div id="reg_content" class="regtitlebg">
+                    <form action="{% url 'login' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <table class="reg" cellpadding="0" cellspacing="0">
+                            {% for field in form %}
+                                <tr>
+                                    <td class="k row2in1" valign="top">
+                                        {{ field.label_tag }}
+                                    </td>
+                                    <td>
+                                        {{ field }}<br>
+                                    </td>
+                                    <td>
+                                        {{ field.errors }}
+                                    </td>
+                                    <td>
+                                        {% if field.help_text %}
+                                            <p class="help text-small text-muted">{{ field.help_text|safe }}</p>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <div class="height20"></div>
+                                    <input type="submit" class="but4" id="btnSubmit" value="确　定">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <br>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="#">个人版注册</a></td>
+                </tr>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+</body>

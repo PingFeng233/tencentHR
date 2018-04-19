@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block tilte %}
+    <title>区域布局 | 认识腾讯 | Tencent 腾讯招聘</title>
+{% endblock %}
+
+<body>
+{% block content %}
+    <div id="branch" class="maxwidth">
+        {% block page_left %}
+            <div class="left userleft box" id="knowqqleft">
+                <ul id="centerleft">
+                    <li><a href="{% url 'about:info' %}" {% if request.path == '/about/info/'  %}class="active"{% endif %}>公司介绍</a></li>
+                    <li><a href="{% url 'about:branch' %}" {% if request.path == '/about/branch/' %}class="active"{% endif %}>区域布局</a></li>
+                    <li><a href="{% url 'about:business' %}" {% if request.path == '/about/business/' %}class="active"{% endif %}>业务体系</a></li>
+                    <li><a href="{% url 'about:culture' %}" {% if request.path == '/about/culture/' %}class="active"{% endif %}>企业文化</a></li>
+                </ul>
+            </div>
+        {% endblock %}
+
+    </div>
+{% endblock %}
+</body>

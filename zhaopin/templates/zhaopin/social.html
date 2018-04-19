@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block tilte %}
+    <title>社会招聘 | Tencent 腾讯招聘</title>
+{% endblock %}
+<body>
+{% block content %}
+    <div id="sociaheader">
+    </div>
+    <div class="content" id="socia_cont">
+        <div class="maxwidth">
+            <div id="socia_l">
+                <form action="/search/?lid={{ workLocation.id }}&tid={{ category.id }}&keywords={{ keywords }}">
+                    <div id="socia_search">
+                        <div class="select">
+                            <input class="val" name="lid" type="hidden" value="{{ worklocation.id }}"/>
+                            <div class="show">-全部工作点-</div>
+                            <div class="options">
+                                <div class="option" val="">-全部工作点-</div>
+                                {% for worklocation in workLocation_list %}
+                                    <div class="option" val="{{ worklocation.id }}">{{ worklocation }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="select ml9">
+                            <input class="val" name="tid" type="hidden" value="{{ category.id }}"/>
+                            <div class="show">-全部职位类别-</div>
+                            <div class="options">
+                                <div class="option" val="">-全部职位类别-</div>
+                                {% for category in category_list %}
+                                    <div class="option" val="{{ category.id }}">{{ category }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="right" style="padding-top:1px;background-position:0 1px;" id="search1">
+                            <input name="keywords" id="hsearch" class="left" placeholder="请输入关键词"/>
+                            <input type="submit" id="hshearbut" value="" class="left pointer"/>
+                            <div class="clr"></div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </form>
+                <div id="socia_hot">
+                    <div class="more"><a href="/search/?lid=0&tid=0&keywords={{ keywords }}">更多&gt;&gt;</a></div>
+                    <table>
+                        <!-- 一个tr输入两个数据 -->
+                        <tr>
+                            <td>
+                                {% for zhaopin1 in zhaopin_list1 %}
+                                    <a href="{% url 'zhaopin:detail' zhaopin1.id %}"
+                                       title="{{ zhaopin1 }}">{{ zhaopin1 | truncatechars:17 }}</a><br>
+                                {% endfor %}
+                            </td>
+                            <td width="87" class="date">
+
+                            </td>
+                            <td>
+                                {% for zhaopin2 in zhaopin_list2 %}
+                                    <a href="{% url 'zhaopin:detail' zhaopin2.id %}"
+                                       title="{{ zhaopin2 }}">{{ zhaopin2 | truncatechars:17 }}</a><br>
+                                {% endfor %}
+                            </td>
+                            <td width="84" align="right" class="date">
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!--<div id="socia_senior">-->
+                <!--<p>如果你是某个领域的精英，欢迎加入我们，一起改变7亿网民的在线生活！</p>-->
+                <!--<a href="senior.php" class="more3">我要应聘高级职位</a>-->
+                <!--</div>-->
+            </div>
+            <div id="socia_r">
+                <div id="socia_news">
+                    <div class="more"><a href="news.php">更多&gt;&gt;</a></div>
+                    <div class="c square">
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=268" title="MIG2018年春季专场招聘会">MIG2018年春季专场招聘会</a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=267" title="腾讯SNG春季技术专场招聘会">腾讯SNG春季技术专场招聘会</a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=266" title="腾讯热招AI职位集锦">腾讯热招AI职位集锦</a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=265" title="诚邀众俠，仗剑江湖 ">诚邀众俠，仗剑江湖 </a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=264" title="《王者荣耀》全球版期待你的加入">《王者荣耀》全球版期待你的加入</a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=263" title="欢乐游戏，“职”得拥有">欢乐游戏，“职”得拥有</a>
+                    </div>
+                </div>
+                <div id="socia_faq">
+                    <div class="more"><a target="_blank" href="https://hr.tencent.com/faq.php">更多&gt;&gt;</a></div>
+                    <div class="c square">
+                        <a target="_blank" href="https://hr.tencent.com/faq.php?id=5">如何应聘腾讯公司的职位？</a>
+                        <a target="_blank" href="https://hr.tencent.com/faq.php?id=3">应届生如何应聘？</a>
+                        <a target="_blank" href="https://hr.tencent.com/faq.php?id=19">腾讯应聘流程是什么？</a>
+                        <a target="_blank" href="https://hr.tencent.com/faq.php?id=20">我注册了简历，但为什么没有人联系我？</a>
+                        <a target="_blank" href="https://hr.tencent.com/faq.php?id=22">我忘记密码了，怎么办？</a>
+                    </div>
+                </div>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+{% endblock %}
+</body>

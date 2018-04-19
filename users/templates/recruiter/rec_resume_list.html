@@ -1,0 +1,71 @@
+{% extends "recruiter/base_rec.html" %}
+
+{% block content %}
+    {{ block.super }}
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">简历管理/简历列表</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        简历列表
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-12" id="key_search">
+                            <div class="col-lg-6">
+                            </div>
+                        </div>
+                        <table class="table table-bordered">
+                            <tr class="text-primary" style="font-weight:bold;">
+                                <td style="width:10%">姓名</td>
+                                <td style="width:18%">性别</td>
+                                <td style="width:18%">年龄</td>
+                                <td style="width:18%">学校</td>
+                                {#                                <td style="width:18%">投递时间</td>#}
+                                <td style="width:18%">操作</td>
+                            </tr>
+                            {% if resume_list %}
+                                {% for resume in resume_list %}
+                                    <tr>
+                                        <td>{{ resume.name }}</td>
+                                        <td>{% if resume.sex == 0 %}女{% else %}男{% endif %}</td>
+                                        <td>{{ resume.age }}</td>
+                                        <td>{{ resume.school }}</td>
+                                        {#                                    <td>{{ 投递时间 }}</td>#}
+                                        <td>
+                                            <a href="{% url 'resume:resume_detail' resume.id %}">查看</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <h4>{{ info }}</h4>
+                                </tr>
+                            {% endif %}
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        $(document).ready(function () {
+            $("#btn-search").click(function () {
+                var key = $("#key").val();
+                location.href = "{{ url }}?page=1&key=" + key;
+            });
+        });
+
+    </script>
+
+{% endblock %}

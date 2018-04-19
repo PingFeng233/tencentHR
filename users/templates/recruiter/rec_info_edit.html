@@ -1,0 +1,171 @@
+{% extends "recruiter/base_rec.html" %}
+
+{% block content %}
+    {{ block.super }}
+    <div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            {#            <h3 class="page-header">文章管理/文章列表</h3>#}
+        </div>
+    </div>
+    <div id="frm_reg1" name="frm_reg1">
+    <div id="logindiv">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table cellpadding="0" cellspacing="0" style="margin-left: 200px;margin-top: 50px">
+                {% if info.error %}
+                    <tr class="bottom0">
+                        <td></td>
+                        <td style="font-family: 微软雅黑"><b>{{ info.error }}</b></td>
+                        <td></td>
+                    </tr>
+                {% endif %}
+                <tr class="bottom0">
+                    <td align="right" width="80" class="k">姓名：</td>
+                    <td>
+                        <input class="longinput3 changeCheck" style="size:35px;width:200px;height:40px"
+                               id="username_common"
+                               name="username" type="text" value="{{ rec.username }}"
+                               tabindex="11"/>
+                    </td>
+                </tr>
+            <tr class="errortd">
+                    <td></td>
+                    <td>
+                        <div class="height20"><span id="msg_Password_common" class="clew"></span></div>
+                    </td>
+                </tr>
+                <tr class="bottom0">
+                    <td align="right" class="k" style="padding-top:12px;" valign="top">部门：</td>
+                    <td>
+                        <input class="longinput3 changeCheck" style="size:35px;width:200px;height:40px"
+                               id="img_common" name="department" type="text" value="{{ rec.department }}"
+                               tabindex="12"/>
+                    </td>
+                </tr>
+
+                <tr class="errortd">
+                    <td></td>
+                    <td>
+                        <div class="height20"><span id="msg_Password_common" class="clew"></span></div>
+                    </td>
+                </tr>
+
+                <tr class="bottom0">
+                    <td align="right" class="k" style="padding-top:12px;" valign="top">邮箱：</td>
+                    <td>
+                        <input class="longinput3 changeCheck" style="size:35px;width:200px;height:40px"
+                               id="email_common" name="email" type="email" value="{{ rec.email }}"
+                               tabindex="12"/>
+                    </td>
+                </tr>
+                <tr class="errortd">
+                    <td></td>
+                    <td>
+                        <div class="height20"><span id="msg_Password_common" class="clew"></span></div>
+                    </td>
+                </tr>
+                <tr class="bottom0">
+                    <td align="right" class="k" style="padding-top:12px;" valign="top">手机：</td>
+                    <td>
+                        <input class="longinput3 changeCheck" style="size:35px;width:200px;height:40px"
+                               id="tel_common" name="tel" type="text" value="{{ rec.tel }}"
+                               onblur="return checkPasswordCommon()" tabindex="12"/>
+                    </td>
+                </tr>
+                <tr class="errortd">
+                    <td></td>
+                    <td>
+                        <div class="height20"><span id="msg_Password_common" class="clew"></span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="width: 190px">
+                        <button type="submit" class="but2"
+                                style="word-wrap:break-word;word-break:break-all;">修改
+                        </button>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
+{% endblock %}
+{% block js %}
+<script src="//cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
+
+
+    <script>
+	var ue = UE.getEditor('input_content', {
+		initialFrameWidth: "100%",
+		initialFrameHeight: "300",
+	});
+</script>
+<script>
+    $(document).ready(function(){
+        var img;
+        function getCookie(name) {
+	        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+	        return r ? r[1] : undefined;
+        }
+        $("#btn-upload").click(function(){
+            var img = $("#upload_img")[0].files[0];
+            var formData = new FormData();
+            formData.append("img",img);
+            $.ajax({
+                url:"/upload",
+                type:"POST",
+                dataType:"json",
+                cache:false,
+                contentType:false,
+                processData:false,
+                data:formData,
+                success:function(re){
+                    if(re.ok == 1){
+                        $("#show_img").attr("src","/static/"+re.img);
+                        img = re.img;
+                        $("#input_img").attr("value",img);
+                    }
+                }
+            });
+        });
+        $("#btn-sub").click(function(){
+                var title = $("#input_title").val();
+                var info = $("#input_info").val();
+                var _xsrf = getCookie("_xsrf");
+                var content = UE.getEditor('input_content').getContent();
+                var tag = $("#input_tag").val();
+                var id = $("#input_id").val();
+                var img = $("#input_img").val();
+                var data = {"title":title,"info":info,
+                        "content":content,"tag":tag,
+                        "img":img,"id":id,
+                        "_xsrf":_xsrf};
+                $.ajax({
+                    url:"/art/art_ed_post",
+                    type:"POST",
+                    data:data,
+                    dataType:"json",
+                    success:function(re){
+                        if(re.ok == 1){
+                            location.href = "/art/art_list";
+                        }else{
+                            var fields = ["title","info","content","tag","img"];
+                            for(v in fields){
+                                if(typeof re[fields[v]] == "undefined"){
+                                    $("#error_"+fields[v]).empty();
+                                }else{
+                                    $("#error_"+fields[v]).empty();
+                                    $("#error_"+fields[v]).append("<font style='color:red'>"+re[fields[v]]+"</font>");
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+    });
+</script>
+{% endblock %}

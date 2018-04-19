@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block  banner %}
+    <div id="home_banner">
+        <a onClick="pgvSendClick({hottag:'HRTENCENT.HOME.BANNER.BANNER222'});"
+           href="https://hr.tencent.com/news_detail.php?id=265" id="big_a">
+            <div id="big_img"
+                 style="background-image:url(http://3gimg.qq.com/daxue_qq_com/image/201802/1519813663896.jpg)"></div>
+        </a>
+        <div class="relative">
+            <div id="small_img">
+                <div class="maxwidth">
+                    <a id="small_pre"></a>
+                    <div id="small_imgs">
+                        <a href="javascript:;" class="item">
+                            <div title="诚邀众俠，仗剑江湖" class="img active"
+                                 b="http://3gimg.qq.com/daxue_qq_com/image/201802/1519813663896.jpg"
+                                 l="https://hr.tencent.com/news_detail.php?id=265" theid="222"><img
+                                    src="http://3gimg.qq.com/daxue_qq_com/image/201802/1519813658370.jpg"/></div>
+                        </a>
+                        <a href="javascript:;" class="item">
+                            <div title="https://hr.tencent.com/news_detail.php?id=267" class="img"
+                                 b="https://3gimg.qq.com/daxue_qq_com/image/201803/1520504916519.jpg"
+                                 l="https://hr.tencent.com/news_detail.php?id=267" theid="223"><img
+                                    src="https://3gimg.qq.com/daxue_qq_com/image/201803/1520504911790.jpg"/></div>
+                        </a>
+                        <a href="javascript:;" class="item">
+                            <div title="MIG2018年春季专场招聘会" class="img"
+                                 b="http://3gimg.qq.com/daxue_qq_com/image/201803/1521094452448.jpg"
+                                 l="https://hr.tencent.com/news_detail.php?id=268" theid="224"><img
+                                    src="http://3gimg.qq.com/daxue_qq_com/image/201803/1521094457656.png"/></div>
+                        </a>
+                        <a href="javascript:;" class="item">
+                            <div title="做个伟大的产品，取悦自己！" class="img"
+                                 b="http://3gimg.qq.com/daxue_qq_com/image/201707/1500018068445.png"
+                                 l="http://hr.tencent.com/news_detail.php?id=253" theid="210"><img
+                                    src="http://3gimg.qq.com/daxue_qq_com/image/201707/1500018074911.png"/></div>
+                        </a>
+                        <a href="javascript:;" class="item">
+                            <div title="《王者荣耀》全球版期待你的加入" class="img"
+                                 b="https://3gimg.qq.com/daxue_qq_com/image/201801/1517378515836.jpg"
+                                 l="https://hr.tencent.com/news_detail.php?id=264" theid="221"><img
+                                    src="https://3gimg.qq.com/daxue_qq_com/image/201801/1517378520401.jpg"/></div>
+                        </a>
+                    </div>
+                    <a id="small_next"></a>
+                    <div class="clr"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <div id="home_cont" class="content">
+        <div class="maxwidth">
+            {{ message }}
+            <div class="left" id="home_l">
+                <div class="left" id="home_ll">
+                    <form action="{% url 'zhaopin:search' %}">
+                        <div id="hsearch1">
+                            <input name="keywords" id="hsearch" placeholder="请输入关键词" class="left"
+                                   value="{{ keywords }}"/>
+                            <input type="submit" id="hshearbut" value="" class="left pointer"/>
+                            <div class="clr"></div>
+                        </div>
+                    </form>
+                    <div id="hworkplace">
+                        <a href="/search/?lid=0&tid=0&keywords={{ keywords }}">全部</a>
+                        {% for workLocation in workLocation_list %}
+                            <a href="/search/?lid={{ workLocation.id }}&tid=0&keywords={{ keywords }}">{{ workLocation }}</a>
+                        {% endfor %}
+                    </div>
+                    <br>
+                    <div id="hzhiwei">
+                        <a href="/search/?lid=0&tid=0&keywords={{ keywords }}">全部</a>
+                        {% for category in category_list %}
+                            <a href="/search/?lid=0&tid={{ category.id }}&keywords={{ keywords }}">{{ category }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="right" id="home_lr" style="padding-top:26px;">
+                    <div>
+                        <div class="right">
+                            <a href="{% url 'zhaopin:social' %}">更多&gt;&gt;</a>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                    <table id="hhotzw">
+                        {% for zhaopin in zhaopin_list %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'zhaopin:detail' zhaopin.id %}"
+                                       title="18797-QQgame移动端高级产品运营(深圳）">{{ zhaopin.title | truncatechars:18 }}</a>
+                                </td>
+                                <td align="right"><a href="/search/?lid={{ zhaopin.workLocation.id }}&tid=0&keywords=">{{ zhaopin.workLocation }}</a></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="right" id="home_r">
+                <div id="hnews" style="padding-top:24px;">
+                    <div>
+                        <div class="right">
+                            <a target="_blank" href="https://hr.tencent.com/news.php">更多&gt;&gt;</a>
+                        </div>
+                        <div class="clr"></div>
+                    </div>
+                    <div id="hnewsitems" class="square">
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=268" title="MIG2018年春季专场招聘会">MIG2018年春季专场招聘会</a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=267" title="腾讯SNG春季技术专场招聘会">腾讯SNG春季技术专场招聘会</a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=266" title="腾讯热招AI职位集锦">腾讯热招AI职位集锦</a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=265" title="诚邀众俠，仗剑江湖 ">诚邀众俠，仗剑江湖 </a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=264" title="《王者荣耀》全球版期待你的加入">《王者荣耀》全球版期待你的加入</a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=263" title="欢乐游戏，“职”得拥有">欢乐游戏，“职”得拥有</a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=262" title="你是否曾梦想仗剑走天涯？">你是否曾梦想仗剑走天涯？</a>
+                        <a target="_blank" href="https://hr.tencent.com/news_detail.php?id=261" title="腾讯新闻：一点知世界">腾讯新闻：一点知世界</a>
+                    </div>
+                    <div id="dians" class="textr">
+                        <a href="javascript:;" num="0" class="dian active">&nbsp;</a>
+                        <a href="javascript:;" num="2" class="dian">&nbsp;</a>
+                        <a href="javascript:;" num="4" class="dian">&nbsp;</a>
+                        <a href="javascript:;" num="6" class="dian">&nbsp;</a>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+                <div id="hvideo" onclick="showHomeVideo('x00119isxs3');">
+                    <div id="videoshow">
+                        <a href="javascript:;"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </div>
+{% endblock %}

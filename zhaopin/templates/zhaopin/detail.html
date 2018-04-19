@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+
+{% block tilte %}
+    <title>{{ zhaopin }} | 社会招聘 | Tencent 腾讯招聘</title>
+{% endblock %}
+<body>
+{% block content %}
+    <div id="bread">
+        <a href="{% url 'zhaopin:social' %}">社会招聘</a><span>&nbsp;</span><a
+            href="{% url 'zhaopin:search' %}">职位搜索</a><span>&nbsp;</span>{{ zhaopin.title }}
+    </div>
+    <div id="position_detail" class="maxwidth">
+        <div class="box wcont_a">
+            <div class="blueline">
+                <div class="butzwss left"></div>
+                <div class="clr"></div>
+            </div>
+            <form action="{% url 'zhaopin:search' %}" id="searchform" class="buts1">
+                <div id="searchrow1">
+                    <div id="search1"><input id="search2" name="keywords" placeholder="请输入关键词" value="{{ keywords }}"
+                                             class="left"/>
+                        <input class="left" id="search3" type="submit" value=""/>
+                        <div class="clr"></div>
+                    </div>
+                    <input type="hidden" name="lid" value="{{ workLocation_id }}"/>
+                    <input type="hidden" name="tid" value="{{ category_id }}"/>
+                </div>
+                <div id="searchrow2">
+                    <div class="srow2l left"></div>
+                    <div class="left items pl9 itemnone" id="additems">
+                        <a href="/search/?lid=0&tid={{ category_id }}&keywords={{ keywords }}"
+                           {% if workLocation_id == 0 %}class="item active" {% else %}
+                           class="item" {% endif %}><span><font>全部</font></span></a>
+                        {% for workLocation in workLocation_list1 %}
+                            {% if workLocation_id == workLocation.id %}
+                                <a class="item active"
+                                   href="/search/?lid={{ workLocation.id }}&tid={{ category_id }}&keywords={{ keywords }}"><span><font>{{ workLocation }}</font></span></a>
+                            {% else %}
+                                <a class="item"
+                                   href="/search/?lid={{ workLocation.id }}&tid={{ category_id }}&keywords={{ keywords }}"><span><font>{{ workLocation }}</font></span></a>
+                            {% endif %}
+                        {% endfor %}
+                        {% for workLocation in workLocation_list2 %}
+                            <a class="item itemhide"
+                               href="/search/?lid={{ workLocation.id }}&tid={{ category_id }}&keywords={{ keywords }}"><span><font>{{ workLocation }}</font></span></a>
+                        {% endfor %}
+                    </div>
+                    <div class="left"><a href="javascript:;" class="more2">更多</a></div>
+                    <div class="clr"></div>
+                </div>
+                <div id="searchrow3">
+                    <div class="srow2l left"></div>
+                    <div class="left items pl9">
+                        <a href="/search/?lid={{ workLocation_id }}&tid=0&keywords={{ keywords }}"
+                           {% if category_id == 0 %}class="item active" {% else %} class="item" {% endif %}><span><font>全部</font></span></a>
+                        {% for category in category_list %}
+                            <a {% if category_id == category.id %} class="item active" {% else %}
+                                                                   class="item" {% endif %}
+                                                                   href="/search/?lid={{ workLocation_id }}&tid={{ category.id }}&keywords={{ keywords }}"><span><font>{{ category }}</font></span></a>
+                        {% endfor %}
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            </form>
+            <table class="tablelist textl" cellpadding="0" cellspacing="0">
+                <tr class="h">
+                    <td colspan="3" class="l2 bold size16" id="sharetitle">{{ zhaopin.title }}</td>
+                </tr>
+                <tr class="c bottomline">
+                    <td><span class="lightblue l2">工作地点：</span>{{ zhaopin.workLocation }}</td>
+                    <td><span class="lightblue">职位类别：</span>{{ zhaopin.category }}</td>
+                    <td><span class="lightblue">招聘人数：</span>{{ zhaopin.peopleNumber }}人</td>
+                </tr>
+                <tr class="c">
+                    <td colspan="3" class="l2">
+                        <div class="lightblue">招聘要求：</div>
+                        <ul class="squareli">
+                            {% for job_content in job_content_list %}
+                                <li>{{ job_content }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="c">
+                    <td colspan="3" class="l2">
+                        <a href="{% url 'resume:send_resume' zhaopin.id %}" class="but2 left">申请岗位</a>
+                        <div id="applyshow" class="ajaxshow none"></div>
+                        <div class="clr"></div>
+                    </td>
+                </tr>
+                <tr class="c">
+                    <td colspan="3" class="l2">
+                        <div class="bshare-custom icon-medium-plus">
+                            <div class="bsPromo bsPromo2"></div>
+                            <a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a>
+                            <a title="分享到QQ空间" class="bshare-qzone"></a>
+                            <a title="分享到QQ好友" class="bshare-qqim" href="javascript:void(0);"></a>
+                            <a title="分享到新浪微博" class="bshare-sinaminiblog" href="javascript:void(0);"></a>
+                        </div>
+                        <script type="text/javascript" charset="utf-8"
+                                src="//static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
+                        <script type="text/javascript" charset="utf-8" src="//static.bshare.cn/b/bshareC0.js"></script>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+</body>

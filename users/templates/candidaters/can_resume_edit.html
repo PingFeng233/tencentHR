@@ -1,0 +1,122 @@
+{% extends "candidaters/base_can.html" %}
+
+{% block content %}
+    {{ block.super }}
+    <div style="margin-left: 30%">
+        <input id="type" type="hidden" name="type" value="0"/>
+        <div style="margin-bottom: 20px"><h4>个人简历</h4></div>
+        <br>
+        <form action="{% url 'users:edit_resume_cand' request.session.id %}" method="post"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="reg" cellpadding="0" cellspacing="0">
+                {% for field in form %}
+                    <tr>
+                        <td class="k row2in1" valign="top">
+                            {{ field.label_tag }}
+                        </td>
+                        <td>
+                            {{ field }}<br>
+                        </td>
+                        <td>
+                            {{ field.errors }}
+                        </td>
+                        <td>
+                            {% if field.help_text %}
+                                <p class="help text-small text-muted">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td>
+                        <div class="height20"></div>
+                        <input type="submit" class="but4" id="btnSubmit" value="确　定">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+
+{% endblock %}
+{% block js %}
+    <script src="//cdn.bootcss.com/holder/2.9.4/holder.min.js"></script>
+
+
+    <script>
+        var ue = UE.getEditor('input_content', {
+            initialFrameWidth: "100%",
+            initialFrameHeight: "300",
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var img;
+
+            function getCookie(name) {
+                var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+                return r ? r[1] : undefined;
+            }
+
+            $("#btn-upload").click(function () {
+                var img = $("#upload_img")[0].files[0];
+                var formData = new FormData();
+                formData.append("img", img);
+                $.ajax({
+                    url: "/upload",
+                    type: "POST",
+                    dataType: "json",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (re) {
+                        if (re.ok == 1) {
+                            $("#show_img").attr("src", "/static/" + re.img);
+                            img = re.img;
+                            $("#input_img").attr("value", img);
+                        }
+                    }
+                });
+            });
+            $("#btn-sub").click(function () {
+                var title = $("#input_title").val();
+                var info = $("#input_info").val();
+                var _xsrf = getCookie("_xsrf");
+                var content = UE.getEditor('input_content').getContent();
+                var tag = $("#input_tag").val();
+                var id = $("#input_id").val();
+                var img = $("#input_img").val();
+                var data = {
+                    "title": title, "info": info,
+                    "content": content, "tag": tag,
+                    "img": img, "id": id,
+                    "_xsrf": _xsrf
+                };
+                $.ajax({
+                    url: "/art/art_ed_post",
+                    type: "POST",
+                    data: data,
+                    dataType: "json",
+                    success: function (re) {
+                        if (re.ok == 1) {
+                            location.href = "/art/art_list";
+                        } else {
+                            var fields = ["title", "info", "content", "tag", "img"];
+                            for (v in fields) {
+                                if (typeof re[fields[v]] == "undefined") {
+                                    $("#error_" + fields[v]).empty();
+                                } else {
+                                    $("#error_" + fields[v]).empty();
+                                    $("#error_" + fields[v]).append("<font style='color:red'>" + re[fields[v]] + "</font>");
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

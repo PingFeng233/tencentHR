@@ -1,0 +1,46 @@
+{% extends "recruiter/base_rec.html" %}
+{% load staticfiles %}
+{% block head %}
+    {{ block.super }}
+{% endblock %}
+{% block content %}
+    {{ block.super }}
+    <script src="{% static 'hchart/highcharts.js' %}"></script>
+    <script src="{% static 'hchart/modules/exporting.js' %}"></script>
+
+    <div id="page-wrapper">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header">统计图表</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div id="container"></div>
+                <script>
+                    $(function () {
+                        var chart = Highcharts.chart('container', {
+                            title: {
+                                text: '招聘岗位分类统计'
+                            },
+                            subtitle: {
+                                text: []
+                            },
+                            xAxis: {
+                                categories: {{ Categories |safe }}
+                            },
+                            series: [{{ data |safe }}]
+                        });
+                    });
+                </script>
+
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
+

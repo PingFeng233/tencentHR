@@ -1,0 +1,145 @@
+{% block head %}
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        {% block tilte %}
+            <title>首页 | Tencent 腾讯招聘</title>
+        {% endblock %}
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+        <!-- Js Css -->
+        <link media="screen" href="//cdn.m.tencent.com/hr_static/css/all.css?max_age=86412" type="text/css"
+              rel="stylesheet"/>
+        <script type="text/javascript" src="//cdn.m.tencent.com/hr_static/js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="//cdn.m.tencent.com/hr_static/js/jquery-ui-1.7.2.custom.min.js"></script>
+        <script type="text/javascript" src="//cdn.m.tencent.com/hr_static/js/thickbox.js"></script>
+        <link media="screen" href="//cdn.m.tencent.com/hr_static/css/thickbox.css" type="text/css" rel="stylesheet"/>
+        <script type="text/javascript" src="//cdn.m.tencent.com/hr_static/js/functions.js"></script>
+        <script type="text/javascript" src="//cdn.m.tencent.com/hr_static/js/utils.js"></script>
+        <script language="javascript" src="//vm.gtimg.cn/tencentvideo/txp/js/txplayer.js" charset="utf-8"></script>
+        <script type="text/javascript" src="//cdn.m.tencent.com/hr_static/js/all.js?max_age=86412"></script>
+
+        <style>
+            span.highlighted {
+                color: red;
+            }
+        </style>
+
+    </head>
+{% endblock %}
+<body>
+<div id="header">
+    <div class="maxwidth">
+        <a href="{% url 'zhaopin:index' %}" class="left" id="logo"><img
+                src="//cdn.m.tencent.com/hr_static/img/logo.png"/></a>
+        <div class="right" id="headertr">
+            <div class="right pl9" id="topshares">
+                <div class="shares">
+                    <span class="left">分享到：</span>
+                    <!--<a href="javascript:;" onclick="shareto('qqt','top');" id="qqt" title="分享到腾讯微博">分享到腾讯微博</a>-->
+                    <a href="javascript:;" onclick="shareto('qzone','top');" id="qzone" title="分享到QQ空间">分享到QQ空间</a>
+                    <!--<a href="javascript:;" onclick="shareto('pengyou','top');" id="pengyou" title="分享到腾讯朋友">分享到腾讯朋友</a>-->
+                    <a href="javascript:;" onclick="shareto('sinat','top');" id="sinat" title="分享到新浪微博">分享到新浪微博</a>
+                    <!--<a href="javascript:;"  onclick="shareto('renren','top');"id="renren" title="分享到人人网">分享到人人网</a>-->
+                    <!--<a href="javascript:;"  onclick="shareto('kaixin001','top');"id="kaixin" title="分享到开心网">分享到开心网</a>-->
+                    <div class="clr"></div>
+                </div>
+                <!--<a href="javascript:;">分享</a>-->
+            </div>
+            <!--<div class="right pl9">-->
+            <!--<a href="http://t.qq.com/QQjobs" id="tqq" target="_blank">收听腾讯招聘</a>-->
+            <!--</div>-->
+            <div class="right pr9">
+                {% block nav %}
+                    {% if request.session.username %}
+                        <seclect></seclect>
+                        {% if request.session.mark == 0 %}
+                            <a href="{% url 'users:edit_info_cand' request.session.id %}"
+                               id="header_login_anchor">{{ request.session.username }}</a>
+                        {% endif %}
+                        {% if request.session.mark == 1 %}
+                            <a href="{% url 'users:edit_info_rec' request.session.id %}"
+                               id="header_login_anchor">{{ request.session.username }}</a>
+                        {% endif %}
+                        <span class="plr9">|</span><a href="{% url 'users:logout' %}">注销</a>
+                    {% else %}
+                        <a href="{% url 'users:login_can' %}" id="header_login_anchor">登录</a><span class="plr9">|</span>
+                        <a href="{% url 'users:register_can' %}">注册</a>
+                    {% endif %}
+                    <span class="plr9">|</span><a href="#">反馈建议</a>
+                    <span class="plr9">|</span>
+                    <a href="http://careers.tencent.com/global" target="_blank">Tencent Global
+                        Talent</a>
+                {% endblock %}
+                <script>
+                    var User_Account = "";
+                </script>
+            </div>
+            <div class="clr"></div>
+        </div>
+        <div class="clr"></div>
+    </div>
+    <div id="menus">
+        <div class="maxwidth">
+            <ul id="menu" class="left">
+                <li id="nav1" {% if request.path == '/index/' %} class="active" {% endif %}><a
+                        href="{% url 'zhaopin:index' %}">&nbsp;</a></li>
+                <li id="nav2" {% if request.path == '/social/' %}class="active" {% endif %}><a
+                        href="{% url 'zhaopin:social' %}">&nbsp;</a></li>
+                <li id="nav3" {% if  'about' in request.path %}class="active" {% endif %}><a
+                        href="{% url 'about:info' %}">&nbsp;</a></li>
+                <li id="nav4" {% if  'inTencent' in request.path %}class="active" {% endif %}><a
+                        href="{% url 'inTencent:work' %}">&nbsp;</a></li>
+            </ul>
+            <a class="right texti9" target="_blank" id="navxy" href="http://join.qq.com">校园招聘</a>
+            <div class="clr"></div>
+        </div>
+    </div>
+    <h4>
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <strong>{{ message }}</strong>
+            </div>
+        {% endfor %}
+    </h4>
+</div>
+{% block banner %}
+{% endblock %}
+{% block content %}
+{% endblock %}
+
+
+<div id="homeDep">
+    <table id="homeads">
+        <tr>
+            <td align="center"><a href="http://tencent.avature.net/career" target="blank">全球招聘</a></td>
+            <td align="center"><a href="http://game.qq.com/hr/" target="blank">互动娱乐事业群招聘</a></td>
+            <td align="center"><a href="http://hr.tencent.com/position.php?lid=&tid=&keywords=WXG" target="blank">微信事业群招聘</a>
+            </td>
+            <td align="center"><a href="http://hr.qq.com/" target="blank">技术工程事业群招聘</a></td>
+            <td align="center"><a href="http://snghr.tencent.com" target="blank">社交网络事业群招聘</a></td>
+            <td align="center"><a href="http://mighr.qq.com" target="blank">移动互联网事业群招聘</a></td>
+            <td align="center"><a href="http://hr.tencent.com/position.php?keywords=OMG" target="blank">网络媒体事业群招聘</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="footer">
+    <div>
+        <a href="http://www.tencent.com/" target="_blank">关于腾讯</a><span>|</span><a
+            href="http://www.qq.com/contract.shtml" target="_blank">服务条款</a><span>|</span><a
+            href="http://hr.tencent.com/" target="_blank">腾讯招聘</a><span>|</span><a
+            href="http://careers.tencent.com/global" target="_blank">Tencent Global Talent</a><span>|</span><a
+            href="http://gongyi.qq.com/" target="_blank">腾讯公益</a><span>|</span><a href="http://service.qq.com/"
+                                                                                  target="_blank">客服中心</a>
+    </div>
+    <p>Copyright &copy; 1998 - 2018 Tencent. All Rights Reserved.</p>
+</div>
+<script type="text/javascript" src="//tajs.qq.com/stats?sId=64934792" charset="UTF-8"></script>
+</body>
+{% block js %}
+{% endblock %}
+</html>
