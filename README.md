@@ -10,6 +10,9 @@ https://github.com/PingFeng233/TencentHR_crawl
 
 项目已经用openresty + gunicorn 用wgsi部署在服务器上了
 地址:http://120.77.250.162:23333/index
+
 测试账号:
+
 企业版: 账号:张三 密码:123456 部门:招聘部
+
 个人版: 账号:张三 密码:123456
