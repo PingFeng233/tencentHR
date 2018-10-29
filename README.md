@@ -8,8 +8,6 @@ django还原腾讯招聘网站
 招聘岗位数据是用scrapy爬虫获取的,源码附上:
 https://github.com/PingFeng233/TencentHR_crawl
 
-项目已经用openresty + gunicorn 用wgsi部署在服务器上了
-地址:http://120.77.250.162:23333/index
 
 测试账号:
 
